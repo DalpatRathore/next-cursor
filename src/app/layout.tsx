@@ -12,6 +12,7 @@ import { ThemeProvider } from "@/providers/theme-provider";
 import { ThemeToggle } from "@/components/theme-toggle";
 
 import { ClerkThemeProvider } from "@/providers/clerk-theme-provider";
+import ConvexClientProvider from "@/providers/convex-provider-with-clerk";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -58,7 +59,7 @@ export default function RootLayout({
                 <UserButton />
               </SignedIn>
             </header>
-            {children}
+            <ConvexClientProvider>{children}</ConvexClientProvider>
             <ThemeToggle />
           </ClerkThemeProvider>
         </ThemeProvider>
