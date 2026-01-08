@@ -1,6 +1,4 @@
-
 import {
-  ClerkProvider,
   SignInButton,
   SignUpButton,
   SignedIn,
@@ -10,10 +8,10 @@ import {
 import type { Metadata } from "next";
 import { IBM_Plex_Mono, Inter } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "@/components/theme-provider";
+import { ThemeProvider } from "@/providers/theme-provider";
 import { ThemeToggle } from "@/components/theme-toggle";
 
-import { dark } from "@clerk/themes";
+import { ClerkThemeProvider } from "@/providers/clerk-theme-provider";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -37,20 +35,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <ClerkProvider
-      appearance={{
-        theme: dark,
-      }}
-    >
-      <html lang="en" suppressHydrationWarning>
-        <head />
-        <body className={`${inter.variable} ${plexMono.variable} antialiased`}>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
+    <html lang="en" suppressHydrationWarning>
+      <head />
+      <body className={`${inter.variable} ${plexMono.variable} antialiased`}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <ClerkThemeProvider>
             <header className="flex justify-end items-center p-4 gap-4 h-16">
               <SignedOut>
                 <SignInButton />
@@ -66,9 +60,9 @@ export default function RootLayout({
             </header>
             {children}
             <ThemeToggle />
-          </ThemeProvider>
-        </body>
-      </html>
-    </ClerkProvider>
+          </ClerkThemeProvider>
+        </ThemeProvider>
+      </body>
+    </html>
   );
 }
